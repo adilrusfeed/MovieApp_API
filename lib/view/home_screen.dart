@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_app/view/widgets/movieSlider.dart';
+import 'package:movie_app/view/widgets/movie_slider.dart';
 import 'package:movie_app/view/widgets/trennding.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text( 
+                Text(
                   "Trending Movies",
                   style: GoogleFonts.aBeeZee(color: Colors.white, fontSize: 20),
                 ),
@@ -48,14 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   "Top Rated Movies",
                   style: GoogleFonts.aBeeZee(color: Colors.white, fontSize: 20),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 3),
                 MoviesSlider(),
                 SizedBox(height: 18),
                 Text(
                   "UpComing Movies",
                   style: GoogleFonts.aBeeZee(color: Colors.white, fontSize: 20),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 3),
                 MoviesSlider()
               ],
             ),
@@ -63,5 +62,3 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 }
-
-
