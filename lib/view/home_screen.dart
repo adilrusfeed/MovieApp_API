@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_app/api/api.dart';
+import 'package:movie_app/model/model.dart';
 import 'package:movie_app/view/widgets/movie_slider.dart';
-import 'package:movie_app/view/widgets/trennding.dart';
+import 'package:movie_app/view/widgets/trending.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +15,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<Movies>> trendingMovies;
+  late Future<List<Movies>> topRatedMovies;
+  late Future<List<Movies>> upComingMovies;
+
+  @override
+  void initState() {
+    super.initState();
+    trendingMovies = Api().getTrendingMovies();
+    topRatedMovies = Api().getTopRatedMovies();
+    upComingMovies = Api().getUpComingMovies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,22 +54,79 @@ class _HomeScreenState extends State<HomeScreen> {
                   "Trending Movies",
                   style: GoogleFonts.aBeeZee(color: Colors.white, fontSize: 20),
                 ),
-                SizedBox(height: 8),
-                Trending(),
+                SizedBox(height: 32),
+                SizedBox(
+                  child: FutureBuilder(
+                      future: trendingMovies,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                              child: Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ));
+                        } else if (snapshot.hasData) {
+                          return Trending(
+                            snapshot: snapshot,
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
+                ),
+                // Trending();
+
                 SizedBox(height: 18),
                 Text(
                   "Top Rated Movies",
                   style: GoogleFonts.aBeeZee(color: Colors.white, fontSize: 20),
                 ),
                 SizedBox(height: 3),
-                MoviesSlider(),
+                SizedBox(
+                  child: FutureBuilder(
+                      future: topRatedMovies,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text("aaa"));
+                        } else if (snapshot.hasData) {
+                          return MoviesSlider(
+                            snapshot: snapshot,
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
+                ),
+
+                // MoviesSlider(),
                 SizedBox(height: 18),
                 Text(
                   "UpComing Movies",
                   style: GoogleFonts.aBeeZee(color: Colors.white, fontSize: 20),
                 ),
                 SizedBox(height: 3),
-                MoviesSlider()
+                //MoviesSlider(),
+                SizedBox(
+                  child: FutureBuilder(
+                      future: upComingMovies,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text("aaa"));
+                        } else if (snapshot.hasData) {
+                          return MoviesSlider(
+                            snapshot: snapshot,
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
+                ),
               ],
             ),
           ),

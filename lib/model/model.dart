@@ -1,32 +1,30 @@
-class MovieModel {
+class Movies {
   String title;
-  String backdropPath;
-  String language;
-  String overview;
-  String posterPath;
-  String releaseDate;
-  double averageVote;
-  double voteCount;
+  String? backDropPath;
+  String? originalTitle;
+  String overView;
+  String? posterPath;
+  String? releaseDate;
+  double? voteAverage;
 
-  MovieModel(
+  Movies(
       {required this.title,
-      required this.backdropPath,
-      required this.language,
-      required this.overview,
-      required this.posterPath,
-      required this.releaseDate,
-      required this.averageVote,
-      required this.voteCount});
+      this.backDropPath,
+      this.originalTitle,
+      required this.overView,
+      this.posterPath,
+      this.releaseDate,
+      this.voteAverage});
 
-  factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
+  factory Movies.fromJson(Map<String, dynamic> json) {
+    return Movies(
       title: json["title"],
-      backdropPath: json["backdrop_path"],
-      language: json["language"],
-      overview: json["overview"],
+      backDropPath: json["backdrop_path"],
+      originalTitle: json["original_title"],
+      overView: json["overview"],
       posterPath: json["poster_path"],
       releaseDate: json["release_date"],
-      averageVote: json["vote_average"],
-      voteCount: json["vote_count"]);
-
-  Map<String, dynamic> toJson() => {};
+      voteAverage: json["vote_average"].toDouble(),
+    );
+  }
 }
