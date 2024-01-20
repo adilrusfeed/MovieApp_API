@@ -63,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Center(
                               child: Text(
                             snapshot.error.toString(),
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 255, 0, 0)),
                           ));
                         } else if (snapshot.hasData) {
                           return Trending(
@@ -89,7 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       future: topRatedMovies,
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
-                          return Center(child: Text("aaa"));
+                          return Center(
+                              child: Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 255, 0, 0)),
+                          ));
                         } else if (snapshot.hasData) {
                           return MoviesSlider(
                             snapshot: snapshot,
@@ -115,7 +121,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       future: upComingMovies,
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
-                          return Center(child: Text("aaa"));
+                          return Center(
+                              child: Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 255, 0, 0)),
+                          ));
                         } else if (snapshot.hasData) {
                           return MoviesSlider(
                             snapshot: snapshot,
