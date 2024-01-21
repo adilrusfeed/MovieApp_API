@@ -2,33 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_app/api/api.dart';
-import 'package:movie_app/model/model.dart';
-import 'package:movie_app/view/widgets/movie_slider.dart';
-import 'package:movie_app/view/widgets/trending.dart';
+import 'package:movie_app/constants/constants.dart';
+import 'package:movie_app/controller/home_provider.dart';
+import 'package:movie_app/widgets/movie_slider.dart';
+import 'package:movie_app/widgets/trending.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  late Future<List<Movies>> trendingMovies;
-  late Future<List<Movies>> topRatedMovies;
-  late Future<List<Movies>> upComingMovies;
-
-  @override
-  void initState() {
-    super.initState();
-    trendingMovies = Api().getTrendingMovies();
-    topRatedMovies = Api().getTopRatedMovies();
-    upComingMovies = Api().getUpComingMovies();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<HomeProvider>(context);
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         appBar: AppBar(
@@ -57,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 32),
                 SizedBox(
                   child: FutureBuilder(
-                      future: trendingMovies,
+                      future: provider.getHomeScreen(
+                          url: ApiConstants.trending, context: context),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Center(
@@ -87,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 3),
                 SizedBox(
                   child: FutureBuilder(
-                      future: topRatedMovies,
+                      future: provider.getHomeScreen(
+                          url: ApiConstants.topRated, context: context),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Center(
@@ -99,6 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         } else if (snapshot.hasData) {
                           return MoviesSlider(
                             snapshot: snapshot,
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.none) {
+                          return Center(
+                            child: Text("lottie"),
                           );
                         } else {
                           return Center(
@@ -118,7 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 //MoviesSlider(),
                 SizedBox(
                   child: FutureBuilder(
-                      future: upComingMovies,
+                      future: provider.getHomeScreen(
+                          url: ApiConstants.upComing, context: context),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Center(
@@ -127,6 +121,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 255, 0, 0)),
                           ));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.none) {
+                          return Center(
+                            child: Text("lottie"),
+                          );
                         } else if (snapshot.hasData) {
                           return MoviesSlider(
                             snapshot: snapshot,
@@ -137,6 +136,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         }
                       }),
+                ),
+                Text("Popular Movies",
+                    style: GoogleFonts.aBeeZee(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white)),
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  child: FutureBuilder(
+                    future: provider.getHomeScreen(
+                        url: ApiConstants.popular, context: context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.error.toString()),
+                        );
+                      } else if (snapshot.hasData) {
+                        return MoviesSlider(snapshot: snapshot);
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

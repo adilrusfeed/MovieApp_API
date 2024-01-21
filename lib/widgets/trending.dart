@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/view/details_screen.dart';
+import 'package:movie_app/view/screens/details_screen.dart';
 
-import 'package:movie_app/view/widgets/constants.dart';
+import 'package:movie_app/constants/constants.dart';
 
 class Trending extends StatelessWidget {
   const Trending({super.key, required this.snapshot});
@@ -29,8 +29,10 @@ class Trending extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        DetailsScreen(movie: snapshot.data[itemIndex]),
+                    builder: (context) => DetailsScreen(
+                      id: snapshot.data[itemIndex].id,
+                      movie: snapshot.data[itemIndex],
+                    ),
                   ));
             },
             child: ClipRRect(
@@ -39,7 +41,7 @@ class Trending extends StatelessWidget {
                 height: 300,
                 width: 200,
                 child: Image.network(
-                  '${Constants.imagePath}${snapshot.data[itemIndex].posterPath}',
+                  '${ApiConstants.imagePath}${snapshot.data[itemIndex].posterPath}',
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.cover,
                 ),

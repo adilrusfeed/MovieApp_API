@@ -1,12 +1,19 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_app/model/cast_model.dart';
 import 'package:movie_app/model/model.dart';
-import 'package:movie_app/view/widgets/back_button.dart';
-import 'package:movie_app/view/widgets/constants.dart';
+import 'package:movie_app/services/api.dart';
+import 'package:movie_app/widgets/back_button.dart';
+import 'package:movie_app/constants/constants.dart';
 
+// ignore: must_be_immutable
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key, required this.movie});
-  final Movies movie;
+  DetailsScreen({super.key, required this.movie, required this.id});
+  final MovieModel movie;
+  int id;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +25,7 @@ class DetailsScreen extends StatelessWidget {
           pinned: true,
           floating: true,
           flexibleSpace: FlexibleSpaceBar(
-            title: Text(movie.title,
+            title: Text(movie.title!,
                 style: GoogleFonts.aBeeZee(
                     fontSize: 17, fontWeight: FontWeight.w600)),
             background: ClipRRect(
@@ -26,7 +33,7 @@ class DetailsScreen extends StatelessWidget {
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24)),
               child: Image.network(
-                '${Constants.imagePath}${movie.posterPath}',
+                '${ApiConstants.imagePath}${movie.posterPath}',
                 filterQuality: FilterQuality.high,
                 fit: BoxFit.fill,
               ),
@@ -46,18 +53,11 @@ class DetailsScreen extends StatelessWidget {
               ),
               Divider(),
               Text(
-                movie.overView,
+                movie.overView!,
                 style: GoogleFonts.roboto(
                     fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 13),
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
               SizedBox(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,7 +76,7 @@ class DetailsScreen extends StatelessWidget {
                                 fontSize: 12, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            movie.releaseDate,
+                            movie.releaseDate!,
                             style: GoogleFonts.roboto(
                                 fontSize: 12, fontWeight: FontWeight.bold),
                           )
@@ -99,13 +99,62 @@ class DetailsScreen extends StatelessWidget {
                           color: Colors.amber,
                           size: 14,
                         ),
-                        Text('${movie.voteAverage.toStringAsFixed(2)}/10',
+                        Text('${movie.voteAverage!.toStringAsFixed(2)}/10',
                             style: TextStyle(
-                                fontSize: 13, fontWeight: FontWeight.bold))
+                                fontSize: 12, fontWeight: FontWeight.bold))
                       ]),
                     )
                   ],
                 ),
+              ),
+              FutureBuilder(
+                // future:Provider.of<CastProvider>(context,listen: false).loadCast(context, id),
+                future: ApiServices().getCast(
+                  castUrl:
+                      'https://api.themoviedb.org/3/movie/$id/credits?api_key=b3e0d3eff8d8a525377abdb307695baa',
+                  context: context,
+                ),
+                builder: (context, AsyncSnapshot<List<CastModel>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text("No data available");
+                  } else {
+                    return SizedBox(
+                      height: 130,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          CastModel casts = snapshot.data![index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 12),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: CircleAvatar(
+                                      radius: 45,
+                                      backgroundImage: NetworkImage(
+                                          '${ApiConstants.imagePath}${casts.profilePath!}'),
+                                    ),
+                                  ),
+                                ),
+                                Text(casts.name!),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
               )
             ],
           ),

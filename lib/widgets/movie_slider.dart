@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/view/details_screen.dart';
-import 'package:movie_app/view/widgets/constants.dart';
+import 'package:movie_app/view/screens/details_screen.dart';
+import 'package:movie_app/constants/constants.dart';
 
 class MoviesSlider extends StatelessWidget {
   const MoviesSlider({
@@ -25,8 +25,10 @@ class MoviesSlider extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          DetailsScreen(movie: snapshot.data[index]),
+                      builder: (context) => DetailsScreen(
+                        movie: snapshot.data[index],
+                        id: snapshot.data[index].id,
+                      ),
                     ));
               },
               child: ClipRRect(
@@ -37,7 +39,7 @@ class MoviesSlider extends StatelessWidget {
                   child: Image.network(
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.cover,
-                      "${Constants.imagePath}${snapshot.data![index].posterPath}"),
+                      "${ApiConstants.imagePath}${snapshot.data![index].posterPath}"),
                 ),
               ),
             ),
