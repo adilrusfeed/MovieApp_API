@@ -20,7 +20,6 @@ class DetailsScreen extends StatelessWidget {
       body: CustomScrollView(slivers: [
         SliverAppBar.large(
           leading: Backbutton(),
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           expandedHeight: 500,
           pinned: true,
           floating: true,
@@ -107,6 +106,7 @@ class DetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 5),
               FutureBuilder(
                 // future:Provider.of<CastProvider>(context,listen: false).loadCast(context, id),
                 future: ApiServices().getCast(
@@ -140,7 +140,7 @@ class DetailsScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(2.0),
                                     child: CircleAvatar(
-                                      radius: 45,
+                                      radius: 40,
                                       backgroundImage: NetworkImage(
                                           '${ApiConstants.imagePath}${casts.profilePath!}'),
                                     ),

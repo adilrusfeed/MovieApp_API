@@ -21,10 +21,12 @@ class MovieScreen extends StatelessWidget {
         title: Text(
           "MOVIES",
           style: GoogleFonts.aBeeZee(
-              fontSize: 30, fontWeight: FontWeight.w800, color: Colors.white),
+              fontSize: 30,
+              fontWeight: FontWeight.w800,
+              color: const Color.fromARGB(255, 255, 0, 0)),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
         elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.dark,

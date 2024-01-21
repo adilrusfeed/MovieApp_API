@@ -14,14 +14,16 @@ class TvShowScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<HomeProvider>(context);
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 159, 18, 18),
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
         // extendBodyBehindAppBar: true,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
             "TV SHOW",
             style: GoogleFonts.aBeeZee(
-                fontSize: 30, fontWeight: FontWeight.w800, color: Colors.white),
+                fontSize: 30,
+                fontWeight: FontWeight.w800,
+                color: const Color.fromARGB(255, 255, 0, 0)),
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
