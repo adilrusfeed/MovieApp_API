@@ -111,7 +111,7 @@ class DetailsScreen extends StatelessWidget {
                 // future:Provider.of<CastProvider>(context,listen: false).loadCast(context, id),
                 future: ApiServices().getCast(
                   castUrl:
-                      'https://api.themoviedb.org/3/movie/$id/credits?api_key=b3e0d3eff8d8a525377abdb307695baa',
+                      'https://api.themoviedb.org/3/movie/$id/credits?api_key=3c20bf0bac3997023d6185084b76a613',
                   context: context,
                 ),
                 builder: (context, AsyncSnapshot<List<CastModel>> snapshot) {
