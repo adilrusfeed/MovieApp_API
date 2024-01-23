@@ -89,9 +89,9 @@ class HomeScreen extends StatelessWidget {
                             snapshot: snapshot,
                           );
                         } else if (snapshot.connectionState ==
-                            ConnectionState.none) {
+                            ConnectionState.waiting) {
                           return Center(
-                            child: Text("lottie"),
+                            child: Image.asset("assets/images/logoname2.png"),
                           );
                         } else {
                           return Center(

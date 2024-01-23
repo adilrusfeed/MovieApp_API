@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:movie_app/controller/bottom_provider.dart';
 import 'package:movie_app/view/screens/home_screen.dart';
 import 'package:movie_app/view/screens/movie_screen.dart';
@@ -34,28 +35,30 @@ class BottomNavigation extends StatelessWidget {
               },
               destinations: [
                 NavigationDestination(
-                  icon: Icon(Iconsax.home,
+                  icon: Icon(Icons.home,
                       color: bottomProvider.currentIndex == 0
                           ? Colors.white
-                          : Color.fromARGB(255, 255, 255, 255)),
+                          : Color.fromARGB(255, 106, 105, 105)),
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: Icon(Iconsax.search_normal,
+                  icon: Icon(Icons.search,
+                      size: 30,
                       color: bottomProvider.currentIndex == 1
                           ? Colors.white
-                          : Color.fromARGB(255, 255, 255, 255)),
+                          : Color.fromARGB(255, 106, 105, 105)),
                   label: 'Search',
                 ),
                 NavigationDestination(
-                  icon: Icon(Iconsax.video,
+                  icon: Icon(Icons.videocam_outlined,
+                      size: 30,
                       color: bottomProvider.currentIndex == 2
                           ? Colors.white
                           : const Color.fromARGB(255, 106, 105, 105)),
                   label: 'Movies',
                 ),
                 NavigationDestination(
-                  icon: Icon(Iconsax.video_horizontal,
+                  icon: Icon(Icons.tv,
                       color: bottomProvider.currentIndex == 3
                           ? Colors.white
                           : const Color.fromARGB(255, 106, 105, 105)),

@@ -104,7 +104,7 @@ class SearchScreen extends StatelessWidget {
                         )
                       : Center(
                           child: Text(
-                            "You Can Search Here Your Movie",
+                            "Search Movies",
                             style: GoogleFonts.aBeeZee(
                               fontSize: 20,
                               fontWeight: FontWeight.w800,

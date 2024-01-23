@@ -45,7 +45,7 @@ class ApiServices {
         return [];
       }
     } catch (e) {
-      print("unable to fetch data:-${e}");
+      log("unable to fetch data:$e");
       return [];
     }
   }

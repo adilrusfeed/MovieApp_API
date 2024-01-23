@@ -32,10 +32,10 @@ class MoviesSlider extends StatelessWidget {
                     ));
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(10),
                 child: SizedBox(
-                  height: 200,
-                  width: 130,
+                  height: 100,
+                  width: 100,
                   child: Image.network(
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.cover,

@@ -140,7 +140,7 @@ class DetailsScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(2.0),
                                     child: CircleAvatar(
-                                      radius: 40,
+                                      radius: 45,
                                       backgroundImage: NetworkImage(
                                           '${ApiConstants.imagePath}${casts.profilePath!}'),
                                     ),
