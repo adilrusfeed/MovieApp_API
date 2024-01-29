@@ -91,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                         } else if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Center(
-                            child: Image.asset("assets/images/logoname2.png"),
+                            child: CircularProgressIndicator(),
                           );
                         } else {
                           return Center(
